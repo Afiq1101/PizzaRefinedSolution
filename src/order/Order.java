@@ -1,16 +1,3 @@
-package order;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import payment.Cash;
-import payment.CreditCard;
-import payment.QRpay;
-
-import pizza.Pizza;
-import pizza.SizeSmall;
-
 public class Order {
 
 	ArrayList<Pizza> pizzas  = new ArrayList<Pizza>(); 
@@ -54,45 +41,36 @@ public class Order {
 		
 	}
 	
-	public ArrayList<Pizza> rmvPizza(ArrayList<Pizza>  currentPizzas){ //
-		
-		if(!currentPizzas.isEmpty()) {
-		showPizzaOrder(currentPizzas);
-	
-		
-		  boolean validValue = false;
-	       do {
-				System.out.println("Enter Pizza Index To Remove Pizza or Enter -1 to Cancel: ");
-	    	   Scanner proceedScan= new Scanner(System.in);
-	    	   int  selectedOption = proceedScan.nextInt();
+	public ArrayList<Pizza> rmvPizza(ArrayList<Pizza> currentPizzas) {
+	    if (!currentPizzas.isEmpty()) {
+	        showPizzaOrder(currentPizzas);
 
-	    	   try {
-	    	   if(selectedOption < currentPizzas.size()) {
-	    		   currentPizzas.remove(selectedOption);
-	    		   validValue = true;
+	        while (true) {
+	            System.out.println("Enter Pizza Index To Remove Pizza or Enter -1 to Cancel: ");
+	            Scanner proceedScan = new Scanner(System.in);
+	            int selectedOption = proceedScan.nextInt();
 
-	    	   }else if(selectedOption == -1 ) {
-	    		   validValue = true;
-	    	   }else{
-	    		   System.out.println("Invalid Selection");
-	    		   validValue = false;
-	    	   }   
-	    		   
-		    		  
-		    	    	  
-	    	   }catch(Exception e) {
-    	       		 System.out.println("Invalid Value Entered.");
-    	       		validValue = false;
-    	       	}
-    		   
-	       }while(validValue == false);
-		
-		}else {
-			System.out.println("No Pizzas Have Been Made");
-		}
-		return currentPizzas;
-		
+	            try {
+	                if (selectedOption < currentPizzas.size()) {
+	                    currentPizzas.remove(selectedOption);
+	                    break;
+	                } else if (selectedOption == -1) {
+	                    break;
+	                } else {
+	                    System.out.println("Invalid Selection");
+	                }
+	            } catch (Exception e) {
+	                System.out.println("Invalid Value Entered.");
+	            }
+	        }
+	    } else {
+	        System.out.println("No Pizzas Have Been Made");
+	    }
+
+	    return currentPizzas;
 	}
+	
+	
 	
 	public double calculateTotal(Order order) {//
 			double payableAmount = 0;
@@ -127,53 +105,47 @@ public class Order {
 	
 	
 	
-	
-	public void orderPizza(Order order){//
-		
-		  boolean sizeIsValid = false; 
-		   do {
-			   System.out.println("-----------------------");
-	    	   System.out.println("1 AddOrder\n2 ViewOrder\n3 Remove Pizza From Order\n4 Pay For Ordern\n5 Cancel Order\nPlease Enter the corresponding number to proceed:");
-	    	   Scanner selectionScan= new Scanner(System.in);
-	    	   String  sizeIndex = selectionScan.next();
-	    	   
-	    	   if(sizeIndex.trim().equals("1")) {
-	    		   order.pizzas =  addPizza(order.pizzas);
-	    		   
-	    	   }else if(sizeIndex.trim().equals("2")) {
-	    		   showPizzaOrder(order.pizzas);
-	    	   }else if(sizeIndex.trim().equals("3")) {
-	    		   order.pizzas = rmvPizza(order.pizzas);
-	    	   }else if(sizeIndex.trim().equals("4")){
-	    		   if(!order.pizzas.isEmpty()) {
-	    			   order.orderID = String.valueOf(Math.random());
-		    		   order.orderDate = LocalDate.now().toString();
-		    		   order.total = calculateTotal(order);
-		    		   payOrder(order);
-		    		   sizeIsValid = true;
-		    		   System.out.println("Order Ended");
-	    		   }else {
-	    			   System.out.println("No Pizzas Added");
-	    		   }
-	    		   
-	    	   }else if(sizeIndex.trim().equals("5")){
-	    		   order = null;
-	    		   sizeIsValid = true;
-	    		   System.out.println("Order Canceled.");
-	    	   }else {
-	    		   sizeIsValid = false;
-	    		   System.out.println("Invalid Input. Please Try Again.");
-	    	   }
-		   
-		   }while(sizeIsValid == false);
-		
-		
+	public void orderPizza(Order order) {
+	    while (true) {
+	        System.out.println("-----------------------");
+	        System.out.println("1 AddOrder\n2 ViewOrder\n3 Remove Pizza From Order\n4 Pay For Ordern\n5 Cancel Order\nPlease Enter the corresponding number to proceed:");
+	        Scanner selectionScan = new Scanner(System.in);
+	        String sizeIndex = selectionScan.next();
+
+	        if (sizeIndex.trim().equals("1")) {
+	            order.pizzas = addPizza(order.pizzas);
+	        } else if (sizeIndex.trim().equals("2")) {
+	            showPizzaOrder(order.pizzas);
+	        } else if (sizeIndex.trim().equals("3")) {
+	            order.pizzas = rmvPizza(order.pizzas);
+	        } else if (sizeIndex.trim().equals("4")) {
+	            if (!order.pizzas.isEmpty()) {
+	                payOrder(order);
+	                System.out.println("Order Ended");
+	                break;
+	            } else {
+	                System.out.println("No Pizzas Added");
+	            }
+	        } else if (sizeIndex.trim().equals("5")) {
+	            order = null;
+	            System.out.println("Order Canceled.");
+	            break;
+	        } else {
+	            System.out.println("Invalid Input. Please Try Again.");
+	        }
+	    }
 	}
+
+	
+
 	
 	
 	public void payOrder(Order order) {//
 		
 		if(paySelect(order.total) == true) {
+			   order.orderID = String.valueOf(Math.random());
+    		   order.orderDate = LocalDate.now().toString();
+    		   order.total = calculateTotal(order);
 			System.out.println("Payment of "+ order.total + " was Successful.");
 			genReceipt(order);
 		}else {
@@ -183,38 +155,30 @@ public class Order {
 	}
 	
 	
-	 public  boolean  paySelect(double payableAmount){
-		 boolean paymentSuccess = false;
-		 
-		 boolean isValidValue = false;
-		 do {
-			 System.out.println("1 Cash\n2 Credit Card\n3 QRpay\n4 Cancel Order\nPlease Enter the corresponding number to proceed:");
-	    	  Scanner proceedScan= new Scanner(System.in);
-	    	  String selectedOption = proceedScan.next();
-			 if(selectedOption.trim().equals("1")) {
-				 Cash pay = new Cash();
-				 paymentSuccess = pay.pay(payableAmount);
-				 isValidValue = true;
-				
-			 }else if(selectedOption.trim().equals("2")) {
-				 CreditCard pay = new CreditCard();
-				 paymentSuccess = pay.pay(payableAmount);
-				 isValidValue = true;
-				 
-			 }else if(selectedOption.trim().equals("3")){
-				 QRpay pay = new QRpay();
-				 paymentSuccess = pay.pay(payableAmount);
-				 isValidValue = true;
-				 
-			 }else if(selectedOption.trim().equals("4")){
-				 isValidValue = true;
-				 paymentSuccess = false;
-			 }else {
-	       		 System.out.println("Invalid Value Entered.");
-	       		 isValidValue = false;
-			 }
-		}while(isValidValue == false);	 
-		 return paymentSuccess;
-	 }
-	
-}
+	public boolean paySelect(double payableAmount) {
+	    boolean paymentSuccess = false;
+
+	    while (true) {
+	        System.out.println("1 Cash\n2 Credit Card\n3 QRpay\n4 Cancel Order\nPlease Enter the corresponding number to proceed:");
+	        Scanner proceedScan = new Scanner(System.in);
+	        String selectedOption = proceedScan.next();
+
+	        if (selectedOption.trim().equals("1")) {
+	            paymentSuccess = new Cash().pay(payableAmount);
+	            break;
+	        } else if (selectedOption.trim().equals("2")) {
+	            paymentSuccess = new CreditCard().pay(payableAmount);
+	            break;
+	        } else if (selectedOption.trim().equals("3")) {
+	            paymentSuccess = new QRpay().pay(payableAmount);
+	            break;
+	        } else if (selectedOption.trim().equals("4")) {
+	            paymentSuccess = false;
+	            break;
+	        } else {
+	            System.out.println("Invalid Value Entered.");
+	        }
+	    }
+
+	    return paymentSuccess;
+	}
