@@ -29,73 +29,10 @@ public abstract class Pizza {
 
 		    	   if(selectedOption.trim().equals("1")) {
 		    		   
-		    		   boolean sizeIsValid = false; 
-		    		   do {
-				    	   System.out.println("1 Small\n2 Medium\n3 Large\nPlease Enter the corresponding number to proceed:");
-				    	   Scanner sizeScan= new Scanner(System.in);
-				    	   String  sizeIndex = sizeScan.next();
-				    	   
-				    	   if(sizeIndex.trim().equals("1")) {
-				    		   newPizza = new SizeSmall();
-				    		   newPizza = newPizza.setSize(newPizza);
-				    		   newPizza.totalPrice = newPizza.setPrice();
-				    		   sizeIsValid  = true;
-				    	   }else if(sizeIndex.trim().equals("2")) {
-				    		   newPizza = new SizeMedium();
-				    		   newPizza = newPizza.setSize(newPizza);
-				    		   newPizza.totalPrice = newPizza.setPrice();
-				    		   sizeIsValid  = true;
-				    	   }else if(sizeIndex.trim().equals("3")) {
-				    		   newPizza = new SizeLarge();
-				    		   newPizza = newPizza.setSize(newPizza);
-				    		   newPizza.totalPrice = newPizza.setPrice();
-				    		   sizeIsValid  = true;
-				    	   }else {
-				    		   sizeIsValid = false;
-				    			System.out.println("Invalid Input. Please Try Again.");
-				    	   }
-			    	   
-		    		   }while(sizeIsValid == false);
-			    	   
-		    		   
-		    		   boolean toppingIsValid = false; 
-		    		   do {
-				    	   System.out.println("1 Peppers\n2 Sausage\n3 Pepperoni\n4 Done\nPlease Enter the corresponding number to proceed:");
-				    	   Scanner toppingScan= new Scanner(System.in);
-				    	   String  toppingIndex = toppingScan.next();
-				    	   
-				    	   if(toppingIndex.trim().equals("1")) {
-				    		   Topping tops = new Peppers();
-				    		   
-				    		   newPizza.toppings = tops.addTops(newPizza.toppings);
-				    		   newPizza.totalPrice = tops.addPrice(newPizza.totalPrice);
-				    		   
-				
-				    	   }else if(toppingIndex.trim().equals("2")) {
-				    		   Topping tops = new Sausage();
- 	
-				    		   newPizza.toppings = tops.addTops(newPizza.toppings);
-				    		   newPizza.totalPrice = tops.addPrice(newPizza.totalPrice);
-				    		   
-				    	   }else if(toppingIndex.trim().equals("3")) {
-				    		   Topping tops = new Pepperoni();
-				    		   
-				    		   newPizza.toppings = tops.addTops(newPizza.toppings);
-				    		   newPizza.totalPrice = tops.addPrice(newPizza.totalPrice);;
-				    		   
-				    	   }else if(toppingIndex.trim().equals("4")){	
-				    		   toppingIsValid  = true;
+		    		
+			    	   newPizza = selectPizzaSize(newPizza);
+			    	   newPizza = addToppings(newPizza);
 
-				    	   }else {
-				    		   toppingIsValid = false;
-				    	   }
-				    	   
-				    	   
-				    	   System.out.println("Current Total: " + newPizza.totalPrice );
-			    	   
-		    		   }while(toppingIsValid == false);
-		    		  
-		    		   
 		    	   }else if(selectedOption.trim().equals("2")) {
 		    		   validValue = true;
 		    	   }
@@ -107,4 +44,81 @@ public abstract class Pizza {
 			
 		}
 		
+		Pizza selectPizzaSize(Pizza newPizza ){
+			
+			   boolean sizeIsValid = false; 
+    		   do {
+		    	   System.out.println("1 Small\n2 Medium\n3 Large\nPlease Enter the corresponding number to proceed:");
+		    	   Scanner sizeScan= new Scanner(System.in);
+		    	   String  sizeIndex = sizeScan.next();
+		    	   
+		    	   if(sizeIndex.trim().equals("1")) {
+		    		   newPizza = new SizeSmall();
+		    		   newPizza = newPizza.setSize(newPizza);
+		    		   newPizza.totalPrice = newPizza.setPrice();
+		    		   sizeIsValid  = true;
+		    	   }else if(sizeIndex.trim().equals("2")) {
+		    		   newPizza = new SizeMedium();
+		    		   newPizza = newPizza.setSize(newPizza);
+		    		   newPizza.totalPrice = newPizza.setPrice();
+		    		   sizeIsValid  = true;
+		    	   }else if(sizeIndex.trim().equals("3")) {
+		    		   newPizza = new SizeLarge();
+		    		   newPizza = newPizza.setSize(newPizza);
+		    		   newPizza.totalPrice = newPizza.setPrice();
+		    		   sizeIsValid  = true;
+		    	   }else {
+		    		   sizeIsValid = false;
+		    			System.out.println("Invalid Input. Please Try Again.");
+		    	   }
+	    	   
+    		   }while(sizeIsValid == false);
+			
+			return newPizza;
+		}
+		
+		
+		Pizza addToppings(Pizza newPizza ){
+			
+			  boolean toppingIsValid = false; 
+   		   do {
+		    	   System.out.println("1 Peppers\n2 Sausage\n3 Pepperoni\n4 Done\nPlease Enter the corresponding number to proceed:");
+		    	   Scanner toppingScan= new Scanner(System.in);
+		    	   String  toppingIndex = toppingScan.next();
+		    	   
+		    	   if(toppingIndex.trim().equals("1")) {
+		    		   Topping tops = new Peppers();
+		    		   
+		    		   newPizza.toppings = tops.addTops(newPizza.toppings);
+		    		   newPizza.totalPrice = tops.addPrice(newPizza.totalPrice);
+		    		   
+		
+		    	   }else if(toppingIndex.trim().equals("2")) {
+		    		   Topping tops = new Sausage();
+
+		    		   newPizza.toppings = tops.addTops(newPizza.toppings);
+		    		   newPizza.totalPrice = tops.addPrice(newPizza.totalPrice);
+		    		   
+		    	   }else if(toppingIndex.trim().equals("3")) {
+		    		   Topping tops = new Pepperoni();
+		    		   
+		    		   newPizza.toppings = tops.addTops(newPizza.toppings);
+		    		   newPizza.totalPrice = tops.addPrice(newPizza.totalPrice);;
+		    		   
+		    	   }else if(toppingIndex.trim().equals("4")){	
+		    		   toppingIsValid  = true;
+
+		    	   }else {
+		    		   toppingIsValid = false;
+		    	   }
+		    	   
+		    	   
+		    	   System.out.println("Current Total: " + newPizza.totalPrice );
+	    	   
+   		   }while(toppingIsValid == false);
+			return newPizza;
+		}
+		
+		
 }
+
