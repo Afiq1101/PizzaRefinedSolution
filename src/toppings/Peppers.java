@@ -1,3 +1,9 @@
+package toppings;
+
+import java.util.ArrayList;
+
+import pizza.Pizza;
+
 public class Peppers extends Topping{
 
 	@Override 
