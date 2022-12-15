@@ -1,7 +1,3 @@
-package toppings;
-
-import java.util.ArrayList;
-
 public class Peppers extends Topping{
 
 	@Override 
@@ -16,6 +12,18 @@ public class Peppers extends Topping{
 		  price += 2.00;
 		  return price;
 		}
+
+	@Override
+	public Pizza setSize(Pizza currentPizza) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double setPrice() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	
 }
